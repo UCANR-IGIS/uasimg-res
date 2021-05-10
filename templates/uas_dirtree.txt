@@ -1,0 +1,10 @@
+# This is a sample directory tree template that will be read by uas_move()
+#  - elements in {} will be replaced with flight and image metadata
+#  - the first directory below should be where you want the images to go
+#  - the directory tree will be created under a directory provided by an argument to
+#    uas_move(). Therefore do *not* start each line with a slash
+
+{proj}/{loc}/{subloc}/imgs/{flt_date}/{flt_start}-{flt_end}_{camera_abbrev}
+{proj}/{loc}/{subloc}/gis
+{proj}/{loc}/{subloc}/p4d
+{proj}/{loc}/{subloc}/documents
