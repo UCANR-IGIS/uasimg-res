@@ -93,6 +93,13 @@ I found the images, but I can't reproduce the stitching. It looks funny.<br/><br
 We have to report how many acres we've flown with each type of camera for the USDA report.<br/><br/>Whatdyathink?
 <span class="quotechar">&rdquo;</span></div>
 
+---
+
+<div class="quote">
+How do we get our drone data to be FAIR compliant?<br/><br/>
+![](images/fair_principles_600x286.png)
+</div>
+
 # `uasimg` Overview
 
 <img src='images/uasimg_hexlogo.svg' width='200' style="float:right;"/>R package with functions to help you:
