@@ -1,7 +1,7 @@
 ---
-title: "Drone Image Utilities for R"
+title: "Drone Image Utilities for R<br/>Overview"
 author: "Andy Lyons"
-date: "5/11/2021<br/><br/><img src='images/uasimg_hexlogo.svg' width='200'/><br/>https://ucanr-igis.github.io/uasimg"
+date: "May 2021<br/><br/><img src='images/uasimg_hexlogo.svg' width='200'/><br/>https://ucanr-igis.github.io/uasimg"
 output: slidy_presentation
 ---
 
@@ -43,13 +43,13 @@ h2 {
 
 <script language="javascript" type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
 
-## Data for Drone Mapping 
+## Drone Mapping Data - Where it Starts
 
 ![](images/pix4d_map-view_500x393.jpg){style="margin-left:5px;"}
 
 \
 
-## Volume and Variety
+## Volume and Variety - Double Trouble
 
 <div style="float:left; width:260px; margin-left:2em; line-height:1.65em;">
 raw images  
@@ -78,7 +78,7 @@ I know it's here somewhere.
 ---
 
 <div class="quote"><span class="quotechar">&ldquo;</span>
-Yeah I remember hearing someone flew that site. Did you ask Brandon?
+Yeah I remember hearing someone flew that site.<br/><br/>Did you ask Brandon?
 <span class="quotechar">&rdquo;</span></div>
 
 ---
@@ -163,16 +163,16 @@ A "Flight Info" object by itself is not very useful!
 
 **Image metadata**
 
-* camera model, location, orientation, focal length, aperture  
-* stored in the images  
+* ex. camera make and model, GPS coordinates, orientation, focal length, aperture, etc.  
+* stored in the images themselves  
 * essential for photogrammetry  
 
 **Flight metadata**
 
-* name of the project, location, pilot, aircraft, flight notes
+* ex. name of the site, project, pilot, aircraft, flight notes
 * not critical for photogrammetry, but essential for good data management
 * `uasimg` uses flight metadata for i) **cataloging**, ii) **searching**, and iii) **creating directory trees**  
-* see also the [Flight Metadata](https://ucanr-igis.github.io/uasimg/articles/flight_metadata.html){target="_blank" rel="noopener"} Vignette.
+* see also: [Flight Metadata](https://ucanr-igis.github.io/uasimg/articles/flight_metadata.html){target="_blank" rel="noopener"} Vignette.
 
 </div>
 
@@ -196,7 +196,7 @@ uas_flds_oem()
 
 \
 
-## Flight Metadata Helper Functions
+## Flight Metadata Helper Function
 
 You don't have to start from scratch!
 
@@ -205,8 +205,8 @@ uas_metadata_make(ptpinole_info)
 ```
 
 - create a *metadata.txt* file for every image directory in *x*  
-- customize field names with `uas_setflds()`  
-- can prepopulate values from a template ([example](https://gist.githubusercontent.com/ajlyons/d0826f4775413ba27a21c62aff619bc2/raw/a6f3dde133652a729283b0e03f8a923f54f73a67/hrec_riverfire2020_metadata){target="_blank" rel="noopener"})  
+- you can customize field names with `uas_setflds()`  
+- can pre-populate values from a template ([example](https://gist.githubusercontent.com/ajlyons/d0826f4775413ba27a21c62aff619bc2/raw/a6f3dde133652a729283b0e03f8a923f54f73a67/hrec_riverfire2020_metadata){target="_blank" rel="noopener"})  
 - open them in text editor  
 
 \
@@ -215,6 +215,7 @@ Re-run `uas_info()` after you edit flight metadata!
 
 # Step 3. Export flight geometry as GIS files
 
+If desired, you can export the flight geometry:
 
 ```{r eval = FALSE}
 uas_exp_kml(ptpinole_infox)
