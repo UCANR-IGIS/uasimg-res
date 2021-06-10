@@ -292,6 +292,43 @@ Function options:
 - show a map of all the flight areas  
 - include hyperlinks to download all flight areas as a single KML  
 
+## Sample code that does everything
+
+```{r eval=FALSE}
+library(uasimg)
+
+## Set the working directory to the parent of the image folders:
+setwd("D:\\Pix4D\\HREC\\Watershed1\\Data\\2017-01-16_X5")
+
+## Define the subdirectories that have the images
+hrec_dirs <- c("Flight01_1514_1526_400ft", "Flight02_1532_1540_400ft")
+file.exists(hrec_dirs)
+
+## Make metadata text files
+# uas_metadata_make(hrec_dirs, make_new = TRUE, overwrite = FALSE, open = TRUE, use_system_editor = TRUE)
+
+## Extract flight metadata
+hrec_info <- uas_info(hrec_dirs, fp = TRUE)
+
+## Create reports
+hrec_rpt <- uas_report(hrec_info, thumbnails = FALSE,
+                       attachments = c("mcp_kml", "ctr_kml"),
+                       footer_html = "D:\\GitHub\\uasimg\\headers_footers\\footer_igis.html",
+                       png_map = TRUE, group_img = FALSE, show_local_dir = TRUE,
+                       overwrite_html = TRUE, open_report = TRUE)
+
+## Create a TOC
+hrec_toc <- uas_toc(hrec_rpt,
+                    toc_title = "HREC Watershed2, January 2017",
+                    output_dir = ".",
+                    fltmap_base = list(list(kml_fn = "D:\\Pix4D\\HREC\\Baselayers\\hopland.kml",
+                                            color = "red",
+                                            weight = 2)),
+                    fltmap_kml = TRUE,
+                    footer_html = "D:\\GitHub\\uasimg\\headers_footers\\footer_igis.html",
+                    open_toc = TRUE, overwrite_toc = TRUE)
+```
+
 
 # Utilities for Unstitchable Images
 
