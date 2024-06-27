@@ -33,6 +33,10 @@ ul {
 h1 {
   color:#111;
 }
+h1.title {
+  padding-top:2em;
+}
+
 h2 {
   font-size:1.2em;
   color:#007020;
@@ -70,18 +74,18 @@ basemap layers
 --- 
 
 
-<div class="quote" style="margin-top:1em; text-align:center;"><span class="quotechar">&ldquo;</span>
-I know it's here somewhere.
-<span class="quotechar">&rdquo;</span><br/><br/>
-<img src="images/thumb-drives_500x356.jpg"/></div>
+<div class="quote" style="margin-top:1em; text-align:center;">
+<span class="quotechar">&ldquo;</span>I know it's here somewhere.<span class="quotechar">&rdquo;</span><br/><br/>
+<img src="images/thumb-drives_500x356.jpg"/>
+</div>
 
 
 ---
 
-<div class="quote" style"text-align:center;">
+<div class="quote" style="text-align:center;">
 
 <span class="quotechar">&ldquo;</span>
-Yeah I remember hearing someone flew that site.<span class="quotechar">&rdquo;</span><br/>
+Yeah, I remember hearing someone<br/>from UCSB flew that site.<span class="quotechar">&rdquo;</span><br/>
 <br/>
 <span class="quotechar">&ldquo;</span>Did you ask Brandon?<span class="quotechar">&rdquo;</span>
 
@@ -89,19 +93,21 @@ Yeah I remember hearing someone flew that site.<span class="quotechar">&rdquo;</
 
 ---
 
-<div class="quote"><span class="quotechar">&ldquo;</span>
-I found the images, but I can't reproduce the stitching. It looks funny.<br/><br/>Maybe the overlap was too low?
-<span class="quotechar">&rdquo;</span></div>
+<div class="quote" style="text-align:center;">
+<span class="quotechar">&ldquo;</span>I found the images, but I can't reproduce the stitching. It looks funny.<span class="quotechar">&rdquo;</span><br/><br/>
+<span class="quotechar">&ldquo;</span>Maybe your overlap was too low?<span class="quotechar">&rdquo;</span>
+</div>
 
 ---
 
-<div class="quote"><span class="quotechar">&ldquo;</span>
+<div class="quote" style="text-align:center;"><span class="quotechar">&ldquo;</span>
 We have to report how many acres we've flown with each type of camera for the USDA report.<br/><br/>Whatdyathink?
-<span class="quotechar">&rdquo;</span></div>
+<span class="quotechar">&rdquo;</span>
+</div>
 
 ---
 
-<div class="quote">
+<div class="quote" style="text-align:center; margin-top:2em;">
 How do we get our drone data to be FAIR compliant?<br/><br/>
 ![](images/fair_principles_600x286.png)
 </div>
@@ -118,11 +124,15 @@ How do we get our drone data to be FAIR compliant?<br/><br/>
 * utilities for unstitchable images
 * deal with annoying data management tasks
 
-# Data Catalog Tour
+# Sample Data Catalogs
 
-<a href="http://gis-ubuntu.ucanr.edu/uas/hrec/riverfire2020/catalogs/msp/" target="_blank" rel="noopener">
-<img src="images/hrec_toc_700x505.jpg" style="border:5px solid lightgrey; padding:15px;"/>
-</a>
+[UC Merced Vernal Pool and Grassland Reserve](http://uas.igis-data.click/ucm/index.html)
+
+[Point Pinole Regional Shortline Eucalyptus Grove](http://uas.igis-data.click/ptpinole/wg_flt03_report.html)
+
+[Hopland River Fire Revegetation Study](http://uas.igis-data.click/hrec/riverfire/2020/msp/)
+
+\
 
 # Origins
 
@@ -141,11 +151,50 @@ How do we get our drone data to be FAIR compliant?<br/><br/>
 * good deployment system  
 * good tools to create GUIs
 
-# Step 1. Extract Image EXIF Data
+\
 
+# Image Metadata vs Flight Metadata
+
+<div style="margin-left:2em;">
+
+**Image metadata**
+
+* ex. camera make and model, GPS coordinates, orientation, focal length, aperture, etc.  
+* stored in the images themselves  
+* essential for photogrammetry  
+
+\
+
+**Flight metadata**
+
+* ex. name of the site, project, pilot, aircraft, flight notes
+* not critical for photogrammetry, but essential for good data management
+* `uasimg` uses flight metadata for i) **cataloging**, ii) **searching**, and iii) **creating directory trees**  
+* see also: [Flight Metadata](https://ucanr-igis.github.io/uasimg/articles/flight_metadata.html){target="_blank" rel="noopener"} Vignette.
+
+</div>
+
+\
+
+# Catloging Workflow
+
+<https://ucanr-igis.github.io/uasimg/articles/catalog_wrkflw.html>
+
+<center>
+![](./images/uas-catalog-workflow_612x1166.png)
+</center>
+
+\
+
+# Create Flight Info Objects
+
+## Step 1. Extract Image Metadata
+
+<div style="margin:0 2em;">
 ```{r eval = FALSE}
 ptpinole_info = uas_info("d:/uas/ptpinole/west/march2020/dcim")
 ```
+</div>
 
 This will:
 
@@ -161,32 +210,11 @@ You can process multiple directories at once
  
 A "Flight Info" object by itself is not very useful! 
 
-# Step 2. Create / Edit Flight Metadata
-
-## Image metadata vs Flight Metadata
-
-<div style="margin-left:2em;">
-
-**Image metadata**
-
-* ex. camera make and model, GPS coordinates, orientation, focal length, aperture, etc.  
-* stored in the images themselves  
-* essential for photogrammetry  
-
-**Flight metadata**
-
-* ex. name of the site, project, pilot, aircraft, flight notes
-* not critical for photogrammetry, but essential for good data management
-* `uasimg` uses flight metadata for i) **cataloging**, ii) **searching**, and iii) **creating directory trees**  
-* see also: [Flight Metadata](https://ucanr-igis.github.io/uasimg/articles/flight_metadata.html){target="_blank" rel="noopener"} Vignette.
-
-</div>
-
 \
 
-## Entering Flight Metadata
+## Step 2. Enter Flight Metadata
 
-Recommended way to record flight metadata - Notepad!
+Recommended way to record flight metadata - text editor
 
 ![](images/metadata_notepad_700x492.png){style="border:1px solid gray;"}  
 
@@ -194,7 +222,6 @@ Recommended way to record flight metadata - Notepad!
 * Defaults:
 
 <div style="margin:0 2em;">
-
 ```{r}
 uas_flds_oem()
 ```
@@ -206,9 +233,11 @@ uas_flds_oem()
 
 You don't have to start from scratch!
 
+<div style="margin:0 2em;">
 ```{r eval=FALSE}
 uas_metadata_make(ptpinole_info)
 ```
+</div>
 
 - create a *metadata.txt* file for every image directory in *x*  
 - you can customize field names with `uas_setflds()`  
@@ -219,31 +248,64 @@ uas_metadata_make(ptpinole_info)
 
 Re-run `uas_info()` after you edit flight metadata!
 
-# Export flight geometry as GIS files
+\
 
-If desired, you can export the flight geometry:
+# Organize Your Files
 
-<div style="margin-left:2em;">
-```{r eval = FALSE}
-uas_exp_kml(ptpinole_infox)
-uas_exp_shp(ptpinole_info)
+## Parse an image collection into individual flights
+
+<div style="margin:0 2em;">
+```{r eval=FALSE}
+uas_grp_flt()
 ```
 </div>
 
-* image center points
-* footprints  
-* flight MCP  
-* default output folder is a 'map' subfolder of the image directory
+Create separate Flight Info objects if you have:
 
-# Move Your Data into Standard Directory Trees
+ - Multiple flights in one folder
+
+ - One flight spread across multiple folders
+
+\
+
+## Rename Files
+
+<div style="margin:0 2em;">
+```{r eval=FALSE}
+uas_rename()
+```
+</div>
+
+Rename files based on a template, such as:
+
+`{proj}-{loc}_{camera_abbrev}_{Y}{m}{d}_{H}{M}{S}`
+
+Fields available:
+
+- `{i}` an integer starting from 1 and going up, padded with enough leading zeros to accommodate all values  
+- `{Y}` year (4-digit)  
+- `{y}` year (2-digit)  
+- `{m}` month (2-digit)  
+- `{d}` day (2-digit)  
+- `{j}` Julian day  
+- `{H}` hour (2-digits)  
+- `{M}` minutes (2-digits)  
+- `{S}` seconds (2-digits)  
+- `{camera_abbrev}` an abbreviated name of the camera  
+- `{alt_agl}` altitude above the launch point  
+- \+ all your flight metadata
+
+\
+
+## Move Your Data into Standard Directory Trees
 
 ![](images/tree_structure_600x546.png)
 
 You can move your data by hand or with a function:
 
-<div style="margin-left:2em;">
+<div style="margin:0 2em;">
 ```{r eval=FALSE}
-uas_move(ptpinole_info)
+uas_move()
 ```
 </div>
 
@@ -263,11 +325,30 @@ Function options:
 * you can use *any* flight metadata field and a subset of image metadata fields  
 * the first directory should be where you want the images from a single flight to go  
 
+\
+
+# Export flight geometry as GIS files
+
+If desired, you can export the flight geometry:
+
+<div style="margin:0 2em;">
+```{r eval = FALSE}
+uas_exp_kml(ptpinole_infox)
+uas_exp_shp(ptpinole_info)
+```
+</div>
+
+* image center points
+* footprints  
+* flight MCP  
+* default output folder is a 'map' subfolder of the image directory
+
+
 # Create Individual Flight Summary Reports
 
 Create HTML flight summary for one or more Flight Info object(s):
 
-<div style="margin-left:2em;">
+<div style="margin:0 2em;">
 ```{r eval = FALSE}
 uas_report(ptpinole_info)
 ```
@@ -285,11 +366,11 @@ Report options:
 - download satellite image thumbnail (requires Google API key)  
 - output directory (default is 'map' sub-directory)
 
-# Group Flight Summary Reports into a Table of Contents
+# Create Catalogs of Flight Summaries
 
 Feed a list of Flight Summary HTML files. 
 
-<div style="margin-left:2em;">
+<div style="margin:0 2em;">
 ```{r eval=FALSE}
 uas_toc(c("d:/uas/ptpinole/west/march2020/dcim/map/ptpinole_mar2020.html",
           "d:/uas/ptpinole/west/jul2020/dcim/map/ptpinole_jul2020.html",
@@ -314,7 +395,7 @@ Function options:
 
 ## Sample code that does everything
 
-<div style="margin-left:2em;">
+<div style="margin:0 2em;">
 ```{r eval=FALSE}
 library(uasimg)
 
@@ -361,8 +442,7 @@ GIS software like ArcGIS Pro and QGIS use these files to display images in the p
 
 Generate with:
 
-<div style="margin-left:2em;">
-
+<div style="margin:0 2em;">
 ```{r eval = FALSE}
 uas_worldfile(ptpinole_info)
 ```
@@ -393,7 +473,7 @@ If your images can't be stitched, life is not over!
 
 This function will crop each image, keeping the center part (least distorted)
 
-<div style="margin-left:2em;">
+<div style="margin:0 2em;">
 ```{r eval = FALSE}
 uas_cropctr(ptpinole_info)
 ```
@@ -413,13 +493,25 @@ Not great, but...
 * If you're counting things in individual images, might be good enough.  
 * If you know you won't be able to stitch images (i.e., open water), consider flying at "zero percent" overlap and use this technique to verify you're not double-counting.
 
-# Ohter Annoying Tasks: Convert file formats
+# Other Utilities
 
-Convert between JPG, TIF, and DNG without losing all the image metadata (EXIF info):
+## Convert file formats
 
-<div style="margin-left:2em;">
+Convert between JPG, TIF, and DNG __without__ losing all the image metadata (EXIF info):
+
+<div style="margin:0 2em;">
 ```{r eval = FALSE}
 uas_convert()
+```
+</div>
+
+\
+
+## Find Directories with Images
+
+<div style="margin:0 2em;">
+```{r eval = FALSE}
+uas_dirs_find()
 ```
 </div>
 
@@ -430,26 +522,27 @@ uas_convert()
 
 ## Scaling for Production
 
-* `uas_dirs_find()` - find all directories with image files  
+* Shiny GUI   
+* wrapper functions / code recipes  
 * automate production with an Excel based control panel  
-* tips and tricks for production processing  
-* Shiny GUI (?)
+* standalone flight metadata editor
 
-## Tools to get to "one flight per folder"
+\
 
-* multiple flights in one folder - split  
-* one flight spread across multiple directories - merge  
-* handle the details with renaming files, flight metatadata, log and calibration files, etc.  
-
-## Make your data findable
+## Making your data discoverable
 
 * generate XML files for Google Dataset Search  
 * publishing your data catalogs as AGOL web maps  
 
-## Catalog Processed Data
+\
 
-* add links to processed data  
-* ingest the Pix4D / Metashape quality reports (processing settings, quality metrics)
+## Adding Related Data to the Catalog
+
+* flight logs, uncorrected images, calibration files, etc.  
+* processed data  
+* Pix4D / Metashape quality reports (processing settings, quality metrics)
+
+\
 
 # Summary
 
@@ -464,5 +557,4 @@ The need for data management tools and workflows increases as you:
 <img src='images/uasimg_hexlogo.svg' width='200'/><br/>
 https://ucanr-igis.github.io/uasimg/
 </div>
-
 
