@@ -343,8 +343,11 @@ uas_exp_shp(ptpinole_info)
 * flight MCP  
 * default output folder is a 'map' subfolder of the image directory
 
+\
 
-# Create Individual Flight Summary Reports
+# Catalog Your Data
+
+## Create Individual Flight Summary Reports
 
 Create HTML flight summary for one or more Flight Info object(s):
 
@@ -357,16 +360,17 @@ uas_report(ptpinole_info)
 Report options:
 
 - report title
-- HTML header / footer
 - group image locations into 'clusters'
+- data URL  
 - show image thumnbnails
-- custom header / footer (in HTML)
-- show the directory where the images are saved on your local machine
+- custom header / footer
+- directory where the images are saved on your local machine
 - hyperlinks to download the KML files
 - download satellite image thumbnail (requires Google API key)  
-- output directory (default is 'map' sub-directory)
 
-# Create Catalogs of Flight Summaries
+\
+
+## Group Flight Summaries into Catalogs
 
 Feed a list of Flight Summary HTML files. 
 
@@ -465,9 +469,9 @@ With World files images will just "pop" into place (approximately):
 
 ![](images/world_file_placed_500x500.jpg)
 
+\
 
-
-# Crop Out Overlap
+## Crop Out Overlap
 
 If your images can't be stitched, life is not over!
 
@@ -506,17 +510,6 @@ uas_convert()
 </div>
 
 \
-
-## Find Directories with Images
-
-<div style="margin:0 2em;">
-```{r eval = FALSE}
-uas_dirs_find()
-```
-</div>
-
-\
-
 
 # In the pipeline...
 
