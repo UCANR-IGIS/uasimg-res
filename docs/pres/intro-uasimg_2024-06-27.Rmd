@@ -1,7 +1,7 @@
 ---
-title: "Drone Image Utilities for R<br/>Overview"
+title: "Drone Image Utilities for R"
 author: "Andy Lyons"
-date: "June 2024<br/><br/><img src='images/uasimg_hexlogo.svg' style='width:200px;'/><br/>https://ucanr-igis.github.io/uasimg"
+date: "June 2024<br/><br/><img src='images/uasimg_logo_200x231.png' style='width:200px;'/><br/>https://ucanr-igis.github.io/uasimg<p style='text-align:left;'><img src='images/igis_horizontal_824x83.png' style='width:824px; margin-top:0px;'/></p>"
 output: slidy_presentation
 ---
 
@@ -44,24 +44,22 @@ h2 {
 ```
 
 
-
 <script language="javascript" type="text/javascript">w3c_slidy.mouse_click_enabled = false;</script>
 
-## Drone Mapping Data - Where it Starts
+**Drone mapping takes a lots of images...**
 
 ![](images/pix4d_map-view_500x393.jpg){style="margin-left:5px;"}
 
 \
 
-## Volume and Variety - Double Trouble
+**...but it's not just images that you have to keep track of!**
 
 <div style="float:left; width:260px; margin-left:2em; line-height:1.65em;">
-raw images  
-flight log  
+flight logs  
 study area outline  
 GCP coordinates  
 telemetry files  
-ground samples  
+field data  
 other photos  
 video files
 basemap layers
@@ -114,15 +112,23 @@ How do we get our drone data to be FAIR compliant?<br/><br/>
 
 # `uasimg` Overview
 
-<img src='images/uasimg_hexlogo.svg' style="width:200px; float:right;"/>R package with functions to help you:
+<div style="float:left; width:900px; margin-left:2em; line-height:1.65em;">
+R package with functions to help you:
 
 * create catalogs of your images
-* record your flight metadata
-* create GIS data of your data collections
-* store your images in a data structure that will allow you to find them again
-* share your data / metadata with others
-* utilities for unstitchable images
+* record your flight metadata  
+* create GIS layers of your data collections  
+* store your images in a directory structure that will allow you to find them again  
+* share your metadata and data with others  
+* prepare individual images for visualization and analysis in other applications  
 * deal with annoying data management tasks
+</div>
+
+<img src='images/uasimg_logo_200x231.png' style="width:200px; padding:10px;"/>
+
+<div style="clear:both;"></div>
+
+\
 
 # Sample Data Catalogs
 
@@ -159,7 +165,7 @@ How do we get our drone data to be FAIR compliant?<br/><br/>
 
 **Image metadata**
 
-* ex. camera make and model, GPS coordinates, orientation, focal length, aperture, etc.  
+* camera make and model, dimensions, GPS coordinates, yaw, focal length, aperture, etc.  
 * stored in the images themselves  
 * essential for photogrammetry  
 
@@ -167,7 +173,8 @@ How do we get our drone data to be FAIR compliant?<br/><br/>
 
 **Flight metadata**
 
-* ex. name of the site, project, pilot, aircraft, flight notes
+* depends on the project / organization  
+* examples: name of the site, project, pilot, aircraft, flight notes  
 * not critical for photogrammetry, but essential for good data management
 * `uasimg` uses flight metadata for i) **cataloging**, ii) **searching**, and iii) **creating directory trees**  
 * see also: [Flight Metadata](https://ucanr-igis.github.io/uasimg/articles/flight_metadata.html){target="_blank" rel="noopener"} Vignette.
@@ -196,6 +203,8 @@ ptpinole_info = uas_info("d:/uas/ptpinole/west/march2020/dcim")
 ```
 </div>
 
+<div style="margin:0 4em;">
+
 This will:
 
 1) extract the image coordinates
@@ -210,16 +219,19 @@ You can process multiple directories at once
  
 A "Flight Info" object by itself is not very useful! 
 
+</div>
+
 \
 
-## Step 2. Enter Flight Metadata
+## Step 2. Entering Flight Metadata
+
+<div style="margin:0 2em;">
 
 Recommended way to record flight metadata - text editor
 
 ![](images/metadata_notepad_700x492.png){style="border:1px solid gray;"}  
 
-* Any field name allowed  
-* Defaults:
+* Any field name allowed. Defaults:
 
 <div style="margin:0 2em;">
 ```{r}
@@ -227,9 +239,13 @@ uas_flds_oem()
 ```
 </div>
 
+</div>
+
 \
 
 ## Flight Metadata Helper Function
+
+<div style="margin:0 2em;">
 
 You don't have to start from scratch!
 
@@ -244,9 +260,9 @@ uas_metadata_make(ptpinole_info)
 - can pre-populate values from a template ([example](https://gist.githubusercontent.com/ajlyons/d0826f4775413ba27a21c62aff619bc2/raw/a6f3dde133652a729283b0e03f8a923f54f73a67/hrec_riverfire2020_metadata){target="_blank" rel="noopener"})  
 - open them in text editor  
 
-\
+**TIP:** Re-run `uas_info()` after you edit flight metadata text files!
 
-Re-run `uas_info()` after you edit flight metadata!
+</div>
 
 \
 
@@ -260,11 +276,15 @@ uas_grp_flt()
 ```
 </div>
 
+<div style="margin:0 2em;">
+
 Create separate Flight Info objects if you have:
 
  - Multiple flights in one folder
 
  - One flight spread across multiple folders
+
+</div>
 
 \
 
@@ -275,6 +295,8 @@ Create separate Flight Info objects if you have:
 uas_rename()
 ```
 </div>
+
+<div style="margin:0 2em;">
 
 Rename files based on a template, such as:
 
@@ -295,9 +317,13 @@ Fields available:
 - `{alt_agl}` altitude above the launch point  
 - \+ all your flight metadata
 
+</div>
+
 \
 
 ## Move Your Data into Standard Directory Trees
+
+<div style="margin:0 2em;">
 
 ![](images/tree_structure_600x546.png)
 
@@ -309,7 +335,7 @@ uas_move()
 ```
 </div>
 
-Function options:
+Options:
 
 * move or copy images
 * create the directory tree from a template text file:
@@ -323,13 +349,14 @@ Function options:
 
 * placeholders in {} will be replaced with flight and/or image metadata   
 * you can use *any* flight metadata field and a subset of image metadata fields  
-* the first directory should be where you want the images from a single flight to go  
+* the first directory should be where you want the images to go  
+* you can create additional directories for other parts of your workflow
+
+</div>
 
 \
 
-# Export flight geometry as GIS files
-
-If desired, you can export the flight geometry:
+# Export Flight Geometry as GIS files
 
 <div style="margin:0 2em;">
 ```{r eval = FALSE}
@@ -338,16 +365,23 @@ uas_exp_shp(ptpinole_info)
 ```
 </div>
 
+<div style="margin:0 2em;">
+
+Geometries you can export:
+
 * image center points
-* footprints  
-* flight MCP  
-* default output folder is a 'map' subfolder of the image directory
+* modelled footprints  
+* flight area (minimum convex polygon of all the images)
+
+</div>
 
 \
 
 # Catalog Your Data
 
 ## Create Individual Flight Summary Reports
+
+<div style="margin:0 2em;">
 
 Create HTML flight summary for one or more Flight Info object(s):
 
@@ -360,17 +394,24 @@ uas_report(ptpinole_info)
 Report options:
 
 - report title
+- map of image locations
+- show image thumnbnails
 - group image locations into 'clusters'
 - data URL  
-- show image thumnbnails
 - custom header / footer
 - directory where the images are saved on your local machine
 - hyperlinks to download the KML files
-- download satellite image thumbnail (requires Google API key)  
+- create an image thumbnail of the entire flight area (requires a Google Maps or Stadia API key)  
+
+</div>
+
+![](./images/flight-report_popup 620x620.jpg){style="display:block; margin:1em auto;"}
 
 \
 
 ## Group Flight Summaries into Catalogs
+
+<div style="margin:0 2em;">
 
 Feed a list of Flight Summary HTML files. 
 
@@ -391,56 +432,71 @@ Function options:
 - show a map of all the flight areas  
 - include hyperlinks to download all flight areas as a single KML  
 
-## Example
+**Example:** <http://uas.igis-data.click/hrec/watershed2/>
 
-<http://uas.igis-data.click/hrec/riverfire/2020/msp/index.html>
+</div>
 
 \
 
-## Sample code that does everything
+## Sample Script
 
 <div style="margin:0 2em;">
+
 ```{r eval=FALSE}
 library(uasimg)
 
-## Set the working directory to the parent of the image folders:
-setwd("D:\\Pix4D\\HREC\\Watershed1\\Data\\2017-01-16_X5")
-
 ## Define the subdirectories that have the images
-hrec_dirs <- c("Flight01_1514_1526_400ft", "Flight02_1532_1540_400ft")
+hrec_dirs <- c("D:/Pix4D/HREC/Watershed1/Data/2017-01-16_X5/Flight01_1514_1526_400ft",
+               "D:/Pix4D/HREC/Watershed1/Data/2017-01-16_X5/Flight02_1532_1540_400ft")
 file.exists(hrec_dirs)
 
-## Make metadata text files
+## Create/edit metadata text files
 # uas_metadata_make(hrec_dirs, make_new = TRUE, overwrite = FALSE, open = TRUE, use_system_editor = TRUE)
 
-## Extract flight metadata
+## Extract image and flight metadata
 hrec_info <- uas_info(hrec_dirs, fp = TRUE)
 
-## Create reports
-hrec_rpt <- uas_report(hrec_info, thumbnails = FALSE,
-                       attachments = c("mcp_kml", "ctr_kml"),
-                       footer_html = "D:\\GitHub\\uasimg\\headers_footers\\footer_igis.html",
-                       png_map = TRUE, group_img = FALSE, show_local_dir = TRUE,
-                       overwrite_html = TRUE, open_report = TRUE)
+## Create image thumbnails (optional)
+uas_thumbnails_make(hrec_info, rotate = TRUE, stats = TRUE, overwrite = FALSE)
+
+## Create flight summary reports
+hrec_rpts <- uas_report(hrec_info,
+                        thumbnails = TRUE,
+                        attachments = c("mcp_kml", "ctr_kml"),
+                        footer_html = "D:/Pix4D/catalog/headers_footers/footer_igis.html",
+                        tbm_use = TRUE,
+                        tbm_src = "Google",
+                        tbm_api_key = getOption("ANDYS_GOOGLE_STATIC_MAPS_KEY"),
+                        tbm_overwrite = FALSE,
+                        group_img = FALSE,
+                        show_local_dir = TRUE,
+                        overwrite_html = TRUE,
+                        open_report = TRUE)
 
 ## Create a TOC
-hrec_toc <- uas_toc(hrec_rpt,
-                    toc_title = "HREC Watershed2, January 2017",
-                    output_dir = ".",
-                    fltmap_base = list(list(kml_fn = "D:\\Pix4D\\HREC\\Baselayers\\hopland.kml",
-                                            color = "red",
+hrec_toc <- uas_toc(hrec_rpts,
+                    toc_title = "HREC Watershed 1, January 2017",
+                    output_dir = "D:/Data/uas.igis-data/hrec/watershed1",
+                    gather = ".",
+                    fltmap_base = list(list(kml_fn = "D:/Pix4D/HREC/Baselayers/hopland.kml",
+                                            color = "yellow",
                                             weight = 2)),
                     fltmap_kml = TRUE,
-                    footer_html = "D:\\GitHub\\uasimg\\headers_footers\\footer_igis.html",
-                    open_toc = TRUE, overwrite_toc = TRUE)
+                    footer_html = "D:/Pix4D/catalog/headers_footers/footer_igis.html",
+                    open_toc = TRUE,
+                    overwrite_toc = TRUE)
+
+## Output: http://uas.igis-data.click/hrec/watershed1/
 ```
 </div>
 
-# Utilities for Unstitchable Images
+# Utilities for Individual Images
 
 ## World Files
 
-'World Files' are plain-text files (also called sidecar files) with projection info for an image / dataset. 
+<div style="margin:0 2em;">
+
+'World Files' are plain-text files (also called sidecar files) with location and projection info. 
 
 GIS software like ArcGIS Pro and QGIS use these files to display images in the proper place and size.
 
@@ -452,26 +508,28 @@ uas_worldfile(ptpinole_info)
 ```
 </div>
 
-Function options:
+Options:
 
 * World File format (`aux.xml`, `wld`, or `prj`)
-* model yaw rotation   
-
-\
+* include yaw   
 
 Output:
 
-![](images/world_files_explorer_500x235.png){style="border:1px solid lightgrey; maring-left:5px;"}
+![](images/world_files_explorer_500x235.png){style="border:1px solid lightgrey; width:600px; margin-left:5px;"}
 
 \
 
-With World files images will just "pop" into place (approximately):
+With World files, your images will just "pop" into place (approximately) in your GIS software:
 
 ![](images/world_file_placed_500x500.jpg)
 
 \
 
+</div>
+
 ## Crop Out Overlap
+
+<div style="margin:0 2em;">
 
 If your images can't be stitched, life is not over!
 
@@ -497,9 +555,13 @@ Not great, but...
 * If you're counting things in individual images, might be good enough.  
 * If you know you won't be able to stitch images (i.e., open water), consider flying at "zero percent" overlap and use this technique to verify you're not double-counting.
 
-# Other Utilities
+</div>
 
-## Convert file formats
+\
+
+## Convert between file formats
+
+<div style="margin:0 2em;">
 
 Convert between JPG, TIF, and DNG __without__ losing all the image metadata (EXIF info):
 
@@ -508,46 +570,96 @@ Convert between JPG, TIF, and DNG __without__ losing all the image metadata (EXI
 uas_convert()
 ```
 </div>
+</div>
 
 \
+
+## Save Images as Pseudo-Georeferenced GeoTIFFs
+
+<div style="margin:0 2em;">
+```{r eval = FALSE}
+uas_exp_geotiff()
+```
+</div>
+
+<div style="margin:0 2em;">
+
+Open images with remote sensing tools for:
+
+- spatial joins and overlays  
+- pixel classification  
+- compute vegetation indices   
+- zonal stats  
+- object detection with AI  
+
+</div>
+
+\
+
 
 # In the pipeline...
 
 ## Scaling for Production
 
-* Shiny GUI   
+<div style="margin:0 2em;">
+
+* version 2.0 - more pipe friendly
 * wrapper functions / code recipes  
 * automate production with an Excel based control panel  
 * standalone flight metadata editor
+
+</div>
 
 \
 
 ## Making your data discoverable
 
+<div style="margin:0 2em;">
+
 * generate XML files for Google Dataset Search  
-* publishing your data catalogs as AGOL web maps  
+* publish your data catalogs as AGOL web maps  
+
+</div>
 
 \
 
 ## Adding Related Data to the Catalog
 
+<div style="margin:0 2em;">
+
 * flight logs, uncorrected images, calibration files, etc.  
-* processed data  
-* Pix4D / Metashape quality reports (processing settings, quality metrics)
+* processed data   
+* quality reports  
+* processing settings  
+
+</div>
 
 \
 
 # Summary
 
+<div style="display:flex; align-items:start;">
+
+<div>
 The need for data management tools and workflows increases as you:
 
 - accumulate more and more data  
 - work in a team  
 - are mandated to archive your data for the long term  
 - are mandated to make the existence of your data known to others  
-
-<div style="width:500px; margin:2em auto; text-align:center;">
-<img src='images/uasimg_hexlogo.svg' width='200'/><br/>
-https://ucanr-igis.github.io/uasimg/
 </div>
 
+<div style="text-align:center; margin-left:2em;">
+<img src='images/uasimg_logo_200x231.png' width='200'/><br/>https://ucanr-igis.github.io/uasimg/
+</div>
+
+</div>
+
+\
+
+<div style="text-align:center;">
+Data management and creating metadata will never be fun, but
+<p style="font-family:century-supra-text; font-style:italic; font-weight:bold; font-size:150%;">We all stand to gain if we get better at this.</p>
+</div>
+
+\
